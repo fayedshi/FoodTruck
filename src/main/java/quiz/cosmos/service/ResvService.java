@@ -37,7 +37,6 @@ public class ResvService implements InitializingBean {
 		return resvRepository.findOne(id);
 	}
 
-	@Modifying
 	@Transactional
 	public Reservation reserve(User user, Room room, Date fromDt, Date toDt) throws Exception {
 		Reservation res = resvRepository.findReservationByConditions(room.getId(), fromDt, toDt);
@@ -54,7 +53,6 @@ public class ResvService implements InitializingBean {
 		}
 	}
 
-	@Modifying
 	@Transactional
 	public void cancelReservationById(int id) {
 		resvRepository.cancelReservationById(id);
