@@ -38,11 +38,11 @@ public class ResvService implements InitializingBean {
 
 	@Transactional
 	public Reservation reserve(User user, Room room, Date fromDt, Date toDt) throws Exception {
-		// check if the room to book was already booked by himself or others
-		List<Reservation> resvs= resvRepository.findReservationByConditions(room.getId(), fromDt, toDt);
 		try {
 			// prevent duplicate reservation
 			synchronized (this) {
+				// check if the room to book was already booked by himself or by others
+				List<Reservation> resvs = resvRepository.findReservationByConditions(room.getId(), fromDt, toDt);
 				if (resvs != null && !resvs.isEmpty())
 					throw new Exception("Sorry, but room is not available under current criteria.");
 				return resvRepository.save(new Reservation(user, room, fromDt, toDt, ResvStatus.booked));
