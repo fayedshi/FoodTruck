@@ -9,7 +9,6 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Component;
 
 import quiz.cosmos.constants.ResvStatus;
@@ -39,12 +38,13 @@ public class ResvService implements InitializingBean {
 
 	@Transactional
 	public Reservation reserve(User user, Room room, Date fromDt, Date toDt) throws Exception {
-		Reservation res = resvRepository.findReservationByConditions(room.getId(), fromDt, toDt);
+		// check if the room to book was already booked by himself or others
+		List<Reservation> resvs= resvRepository.findReservationByConditions(room.getId(), fromDt, toDt);
 		try {
 			// prevent duplicate reservation
 			synchronized (this) {
-				if (res != null)
-					throw new Exception("Room is not available under current criteria.");
+				if (resvs != null && !resvs.isEmpty())
+					throw new Exception("Sorry, but room is not available under current criteria.");
 				return resvRepository.save(new Reservation(user, room, fromDt, toDt, ResvStatus.booked));
 			}
 			// catch exception for sql

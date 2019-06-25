@@ -3,8 +3,6 @@ package quiz.cosmos.repository;
 import java.util.Date;
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -17,9 +15,9 @@ import quiz.cosmos.model.Reservation;
 public interface ResvRepository extends JpaRepository<Reservation, Integer> {
 	public List<Reservation> findByUserId(int userId);
 
-	@Query(value = "from Reservation where status='booked' and (:fromDt between resvFromDt and resvToDt " + 
-			" or :toDt between resvFromDt and resvToDt ) and roomid=:roomId")
-	public Reservation findReservationByConditions(@Param("roomId") int roomId,@Param("fromDt") Date fromDt, @Param("toDt")Date toDt);
+	// reversed period against roomrepository 
+	@Query(value = "from Reservation a join a.room b where a.status='booked' and :toDt >= a.resvFromDt and :fromDt <= a.resvToDt and b.id=:roomId")
+	public List<Reservation> findReservationByConditions(@Param("roomId") int roomId,@Param("fromDt") Date fromDt, @Param("toDt")Date toDt);
 	
 	@Modifying
 	@Query(value = "update Reservation set status='cancelled' where id=:id")

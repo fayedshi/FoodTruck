@@ -10,11 +10,12 @@ import javax.persistence.Id;
 public class Room {
 
 	@Id
+	@Column(name="room_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@Column(name="hotelid")
+	@Column(name="hotel_id")
 	private int hotelId;
-	@Column(name="roomno")
+	@Column(name="room_no")
 	private String roomNo;
 	@Column(name="city")
 	private String city;

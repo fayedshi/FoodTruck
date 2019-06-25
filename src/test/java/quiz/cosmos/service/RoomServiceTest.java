@@ -2,7 +2,6 @@ package quiz.cosmos.service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,7 +11,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import junit.framework.TestCase;
 import quiz.cosmos.CosmosSpringBootApp;
-import quiz.cosmos.model.Room;
 
 /**
  * Unit test for simple App.

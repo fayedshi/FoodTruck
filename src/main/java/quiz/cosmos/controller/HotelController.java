@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import quiz.cosmos.constants.ResponseStatus;
-import quiz.cosmos.constants.ResvStatus;
 import quiz.cosmos.model.Reservation;
 import quiz.cosmos.model.ResultBean;
 import quiz.cosmos.model.Room;

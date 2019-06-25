@@ -11,7 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
 import quiz.cosmos.constants.ResvStatus;
 
 @Entity
@@ -21,15 +20,15 @@ public class Reservation {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@ManyToOne
-	@JoinColumn(name="userid")
+	@JoinColumn(name="user_id")
 	private User user;
 	
 	@ManyToOne
-	@JoinColumn(name = "roomid")
+	@JoinColumn(name = "room_id")
 	private Room room;
-	@Column(name = "resvfromdt")
+	@Column(name = "resv_from_dt")
 	private Date resvFromDt;
-	@Column(name = "resvtodt")
+	@Column(name = "resv_to_dt")
 	private Date resvToDt;
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status")

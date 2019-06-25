@@ -1,6 +1,5 @@
 package quiz.cosmos.service;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import org.junit.Test;

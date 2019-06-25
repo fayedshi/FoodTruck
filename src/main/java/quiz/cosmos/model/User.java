@@ -10,6 +10,7 @@ import javax.persistence.Id;
 public class User {
 
 	@Id
+	@Column(name="user_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@Column(name = "name")
