@@ -24,11 +24,11 @@ public class UserService {
 		return userRepository.save(users);
 	}
 	
-	public User saveUser(User u) {
+	public User saveUser(User u) throws Exception {
 		Example<User> example = Example.of(u,matcher);
 		if(userRepository.findOne(example) == null)
 			return userRepository.save(u);
-		return null;
+		throw new Exception("User exists already");
 	}
 	
 	public List<User> findAll() {

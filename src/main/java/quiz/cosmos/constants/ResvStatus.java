@@ -1,5 +1,5 @@
 package quiz.cosmos.constants;
 
-public enum RoomStatus {
+public enum ResvStatus  {
 	booked, cancelled
 }

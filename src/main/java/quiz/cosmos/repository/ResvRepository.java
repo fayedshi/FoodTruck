@@ -17,12 +17,11 @@ import quiz.cosmos.model.Reservation;
 public interface ResvRepository extends JpaRepository<Reservation, Integer> {
 	public List<Reservation> findByUserId(int userId);
 
-	@Query(value = "select * from reservation where status='booked' and (:fromDt between resvFromdt and resvtodt " + 
-			" or :toDt between resvFromdt and resvtodt ) and roomid=:roomId",nativeQuery=true)
+	@Query(value = "from Reservation where status='booked' and (:fromDt between resvFromDt and resvToDt " + 
+			" or :toDt between resvFromDt and resvToDt ) and roomid=:roomId")
 	public Reservation findReservationByConditions(@Param("roomId") int roomId,@Param("fromDt") Date fromDt, @Param("toDt")Date toDt);
 	
 	@Modifying
-	@Transactional
 	@Query(value = "update Reservation set status='cancelled' where id=:id")
 	public void cancelReservationById(@Param("id") int reservationId);
 

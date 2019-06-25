@@ -4,17 +4,15 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-import quiz.cosmos.constants.RoomStatus;
+import quiz.cosmos.constants.ResvStatus;
 
 @Entity
 public class Reservation {
@@ -29,21 +27,18 @@ public class Reservation {
 	@ManyToOne
 	@JoinColumn(name = "roomid")
 	private Room room;
-	
-	@JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd")
-	@DateTimeFormat(pattern="yyyy-MM-dd")
 	@Column(name = "resvfromdt")
 	private Date resvFromDt;
-	@JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd")
-	@DateTimeFormat(pattern="yyyy-MM-dd")
 	@Column(name = "resvtodt")
 	private Date resvToDt;
-	private RoomStatus status;
+	@Enumerated(EnumType.STRING)
+	@Column(name = "status")
+	private ResvStatus status;
 
 	public Reservation() {
 	}
 
-	public Reservation(User user, Room room, Date fromDt, Date toDt, RoomStatus status) {
+	public Reservation(User user, Room room, Date fromDt, Date toDt, ResvStatus status) {
 		this.user=user;
 		this.room=room;
 		this.resvFromDt = fromDt;
@@ -75,11 +70,11 @@ public class Reservation {
 		this.resvToDt = resvToDt;
 	}
 
-	public RoomStatus getStatus() {
+	public ResvStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(RoomStatus status) {
+	public void setStatus(ResvStatus status) {
 		this.status = status;
 	}
 

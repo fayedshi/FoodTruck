@@ -26,7 +26,7 @@ public class UserServiceTest extends TestCase {
 
 
 	@Test
-	public void testRegisterUser() throws ParseException {
+	public void testRegisterUser() throws Exception {
 		User u= userService.saveUser(new User("Fred","158-9999"));
 		assertEquals("Fred", userService.findOne(u.getId()).getName());
 	}

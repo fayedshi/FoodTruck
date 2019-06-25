@@ -18,7 +18,8 @@ public class HotelControllerTest {
 	static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 	public static void main(String[] args) throws Exception {
-		//testRooms();
+		// comment others to test one
+		testRooms();
 		testBookRoom();
 	}
 
@@ -40,18 +41,18 @@ public class HotelControllerTest {
 	
 	private static void testBookRoom() throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
-		params.put("fromDate", "2019-02-05");
-		params.put("toDate", "2019-04-21");
+		params.put("fromDate", "2019-05-08");
+		params.put("toDate", "2019-05-25");
 		params.put("userId", "2");
 		params.put("roomId", "1");
 		String url = "http://localhost:8089/reserve";
-		//userService.findOne(2), roomService.findOne(1), sdf.parse("2019-04-23"), sdf.parse("2019-04-29")
 		prepForGet(url, params);
 	}
 
+	// test find available rooms
 	private static void testRooms() throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
-		params.put("city", "sh");
+		params.put("city", "SZ");
 		params.put("fromDate", "2019-02-05");
 		params.put("toDate", "2019-04-21");
 		params.put("low", "200");
