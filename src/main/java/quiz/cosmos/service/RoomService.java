@@ -5,10 +5,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import quiz.cosmos.model.Room;
 import quiz.cosmos.repository.RoomRepository;
 
+@Transactional
 @Component
 public class RoomService {
 
