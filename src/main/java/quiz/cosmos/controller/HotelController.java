@@ -7,7 +7,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,6 +26,7 @@ import quiz.cosmos.service.UserService;
 import quiz.cosmos.util.Util;
 
 @RestController
+@RequestMapping("/hotel")
 public class HotelController {
 
 	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -35,7 +38,7 @@ public class HotelController {
 	@Autowired
 	UserService userService;
 
-	@RequestMapping(value = "/register/{name}/{phoneNo}")
+	@PostMapping(value = "/register/{name}/{phoneNo}")
 	public ResultBean<User> registerUser(@PathVariable("name") String name, @PathVariable("phoneNo") String phoneNo) {
 		try {
 			return Util.buildResultBean(userService.saveUser(new User(name, phoneNo)), null, ResponseStatus.success);
@@ -44,7 +47,7 @@ public class HotelController {
 		}
 	}
 
-	@RequestMapping(value = "/rooms", method = RequestMethod.GET, produces = "application/json")
+	@GetMapping("/rooms")
 	public ResultBean<List<Room>> listAvailableRooms(@RequestParam Map<String, String> paramsMap)
 			throws ParseException {
 		Date from = sdf.parse(paramsMap.get("fromDate"));
@@ -55,7 +58,7 @@ public class HotelController {
 				ResponseStatus.success);
 	}
 
-	@RequestMapping(value = "/reserve", method = RequestMethod.GET, produces = "application/json")
+	@PostMapping(value = "/reserve")
 	public ResultBean<Reservation> bookRoom(@RequestParam Map<String, String> paramsMap) throws Exception {
 		Date from = sdf.parse(paramsMap.get("fromDate"));
 		Date to = sdf.parse(paramsMap.get("toDate"));
@@ -68,12 +71,12 @@ public class HotelController {
 		}
 	}
 
-	@RequestMapping(value = "/myreservations/{userId}")
+	@GetMapping("/myreservations/{userId}")
 	public ResultBean<List<Reservation>> listMyReservations(@PathVariable("userId") int userId) {
 		return Util.buildResultBean(resvService.findMyReservations(userId), null, ResponseStatus.success);
 	}
 
-	@RequestMapping(value = "/cancelreservation/{resId}")
+	@PostMapping(value = "/cancelreservation/{resId}")
 	public ResultBean<Reservation> cancelReservation(@PathVariable("resId") int resId) {
 		resvService.cancelReservationById(resId);
 		return Util.buildResultBean(resvService.findById(resId), null, ResponseStatus.success);
