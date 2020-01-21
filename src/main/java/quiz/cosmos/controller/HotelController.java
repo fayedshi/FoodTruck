@@ -62,6 +62,7 @@ public class HotelController {
 	}
 
 	@PostMapping("/reserve")
+
 	public ResultBean<Reservation> bookRoom(@RequestParam Map<String, String> paramsMap) throws Exception {
 		Date from = sdf.parse(paramsMap.get("fromDate"));
 		Date to = sdf.parse(paramsMap.get("toDate"));
@@ -79,7 +80,9 @@ public class HotelController {
 		return Util.buildResultBean(resvService.findMyReservations(userId), null, ResponseStatus.success);
 	}
 
+
 	@GetMapping("/cancelreservation/{resId}")
+
 	public ResultBean<Reservation> cancelReservation(@PathVariable("resId") int resId) {
 		resvService.cancelReservationById(resId);
 		return Util.buildResultBean(resvService.findById(resId), null, ResponseStatus.success);
