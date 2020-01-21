@@ -23,10 +23,17 @@ public class UserServiceTest extends TestCase {
 	@Autowired 
 	UserService userService;
 
+	@Autowired
+	MyFactoryBean mfb;
 
 	@Test
 	public void testRegisterUser() throws Exception {
 		User u= userService.saveUser(new User("Fred","158-9999"));
 		assertEquals("Fred", userService.findOne(u.getId()).getName());
+	}
+	
+	@Test
+	public void testFactoryBean() throws Exception {
+		mfb.getObject();
 	}
 }

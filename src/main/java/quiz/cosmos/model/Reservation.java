@@ -11,6 +11,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import org.springframework.data.annotation.Version;
+
 import quiz.cosmos.constants.ResvStatus;
 
 @Entity
@@ -33,6 +36,10 @@ public class Reservation {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status")
 	private ResvStatus status;
+	
+	@Version(name = "version")
+	private int version;
+	
 
 	public Reservation() {
 	}

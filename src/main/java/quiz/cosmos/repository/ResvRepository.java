@@ -15,7 +15,7 @@ import quiz.cosmos.model.Reservation;
 public interface ResvRepository extends JpaRepository<Reservation, Integer> {
 	public List<Reservation> findByUserId(int userId);
 
-	// reversed period against roomrepository 
+	// reversed period against room repository 
 	@Query(value = "from Reservation a join a.room b where a.status='booked' and :toDt >= a.resvFromDt and :fromDt <= a.resvToDt and b.id=:roomId")
 	public List<Reservation> findReservationByConditions(@Param("roomId") int roomId,@Param("fromDt") Date fromDt, @Param("toDt")Date toDt);
 	

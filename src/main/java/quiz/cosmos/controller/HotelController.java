@@ -6,10 +6,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,9 +27,11 @@ import quiz.cosmos.service.UserService;
 import quiz.cosmos.util.Util;
 
 @RestController
+@RequestMapping("/hotel")
 public class HotelController {
 
 	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    private static final Logger logger = LoggerFactory.getLogger(HotelController.class);
 
 	@Autowired
 	ResvService resvService;
@@ -35,16 +40,17 @@ public class HotelController {
 	@Autowired
 	UserService userService;
 
-	@RequestMapping(value = "/register/{name}/{phoneNo}")
+	@GetMapping("/register/{name}/{phoneNo}")
 	public ResultBean<User> registerUser(@PathVariable("name") String name, @PathVariable("phoneNo") String phoneNo) {
 		try {
 			return Util.buildResultBean(userService.saveUser(new User(name, phoneNo)), null, ResponseStatus.success);
 		} catch (Exception e) {
+			logger.error("exception occured");
 			return Util.buildResultBean(null, e.getMessage(), ResponseStatus.failed);
 		}
 	}
 
-	@RequestMapping(value = "/rooms", method = RequestMethod.GET, produces = "application/json")
+	@GetMapping(value = "/rooms", produces = "application/json")
 	public ResultBean<List<Room>> listAvailableRooms(@RequestParam Map<String, String> paramsMap)
 			throws ParseException {
 		Date from = sdf.parse(paramsMap.get("fromDate"));
@@ -55,7 +61,7 @@ public class HotelController {
 				ResponseStatus.success);
 	}
 
-	@RequestMapping(value = "/reserve", method = RequestMethod.GET, produces = "application/json")
+	@PostMapping("/reserve")
 	public ResultBean<Reservation> bookRoom(@RequestParam Map<String, String> paramsMap) throws Exception {
 		Date from = sdf.parse(paramsMap.get("fromDate"));
 		Date to = sdf.parse(paramsMap.get("toDate"));
@@ -68,25 +74,26 @@ public class HotelController {
 		}
 	}
 
-	@RequestMapping(value = "/myreservations/{userId}")
+	@GetMapping("/myreservations/{userId}")
 	public ResultBean<List<Reservation>> listMyReservations(@PathVariable("userId") int userId) {
 		return Util.buildResultBean(resvService.findMyReservations(userId), null, ResponseStatus.success);
 	}
 
-	@RequestMapping(value = "/cancelreservation/{resId}")
+	@GetMapping("/cancelreservation/{resId}")
 	public ResultBean<Reservation> cancelReservation(@PathVariable("resId") int resId) {
 		resvService.cancelReservationById(resId);
 		return Util.buildResultBean(resvService.findById(resId), null, ResponseStatus.success);
 	}
 
 	// assistant methods
-	@RequestMapping(value = "/hello/{name}")
+	@GetMapping("/hello/{name}")
 	public String hello(@PathVariable("name") String name) {
 		return "Hello SpringbootApp " + name;
 	}
 
-	@RequestMapping(value = "/showusers")
+	@RequestMapping("/showusers")
 	public List<User> showUsers() {
+		//logger.info("to show users");
 		return userService.findAll();
 	}
 }

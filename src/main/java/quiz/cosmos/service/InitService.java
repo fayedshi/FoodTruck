@@ -7,6 +7,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import quiz.cosmos.model.Employee;
 import quiz.cosmos.model.Room;
 import quiz.cosmos.model.User;
 import quiz.cosmos.repository.ResvRepository;
@@ -20,7 +21,9 @@ public class InitService implements InitializingBean {
 	RoomService roomService;
 	@Autowired
 	UserService userService;
-
+	@Autowired
+	Employee emp;
+	
 	// Mock base data
 	@Override
 	public void afterPropertiesSet() {
@@ -30,5 +33,6 @@ public class InitService implements InitializingBean {
 		List<Room> rooms = Arrays.asList(new Room(1, "8302", "sh", 200), new Room(2, "8106", "sh", 400),
 				new Room(3, "202", "SX", 230), new Room(2, "8604", "SZ", 250));
 		roomService.save(rooms);
+		System.out.println("emp.dept "+ emp.getDept());
 	}
 }
