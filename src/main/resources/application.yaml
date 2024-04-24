@@ -1,0 +1,23 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    # mem for memory, local without mem
+    url: jdbc:h2:mem:~/test
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: sa
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8 
+
+    database: h2
+    hibernate:
+      ddl-auto: update
+      show-sql: true
+  h2:
+    console:
+      path: /h2-console
+      enabled: true
+    settings:
+      web-allow-others=true
